@@ -246,7 +246,7 @@ pub(crate) fn reconstruct_frame(
         // println!();
     }
 
-    let mut ch_unit = &mut ctx.ch_units[ch_block].as_mut().unwrap();
+    let ch_unit = &mut ctx.ch_units[ch_block].as_mut().unwrap();
 
     for ch in 0..num_channels {
         for i in 0..ch_unit.channels[ch].wnd_shape.len() {

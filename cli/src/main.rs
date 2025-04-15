@@ -17,11 +17,10 @@ fn main() -> Result<(), Error> {
         Command::Play { input } => {
             let file = File::open(input)?;
             let reader = BufReader::new(file);
-
             let decoder = atrac3p_decoder::Decoder::new(reader)?;
 
-            let device = rodio::default_output_device().unwrap();
-            let sink = rodio::Sink::new(&device);
+            let (_stream, handle) = rodio::OutputStream::try_default()?;
+            let sink = rodio::Sink::try_new(&handle)?;
 
             sink.append(decoder);
             sink.play();
