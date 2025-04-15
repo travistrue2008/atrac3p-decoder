@@ -6,6 +6,21 @@ use std::fs::File;
 use std::io::{BufReader, Write};
 use std::path::PathBuf;
 
+#[derive(StructOpt)]
+#[structopt(name = "atrac3p-decoder-cli")]
+struct Opts {
+    #[structopt(subcommand)]
+    command: Command,
+}
+
+#[derive(StructOpt)]
+enum Command {
+    Play {
+        #[structopt(parse(from_os_str))]
+        input: PathBuf,
+    },
+}
+
 fn main() -> Result<(), Error> {
     let opts = Opts::from_args();
 
@@ -29,19 +44,4 @@ fn main() -> Result<(), Error> {
     }
 
     Ok(())
-}
-
-#[derive(StructOpt)]
-#[structopt(name = "atrac3p-decoder-cli")]
-struct Opts {
-    #[structopt(subcommand)]
-    command: Command,
-}
-
-#[derive(StructOpt)]
-enum Command {
-    Play {
-        #[structopt(parse(from_os_str))]
-        input: PathBuf,
-    },
 }
